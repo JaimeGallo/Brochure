@@ -1,7 +1,5 @@
 /* ============================================
    DIRECTIVAS DE TAILWIND CSS
-   Las advertencias de @tailwind son normales
-   si tu editor no tiene el plugin de Tailwind
    ============================================ */
    @tailwind base;
    @tailwind components;
@@ -31,7 +29,7 @@
    }
    
    /* ============================================
-      ESTILOS DEL BROCHURE
+      ESTILOS DEL BROCHURE - FORMATO POSTER
       ============================================ */
    
    .brochure-container {
@@ -44,27 +42,144 @@
    }
    
    /* ============================================
+      OPTIMIZACIÓN RESPONSIVE - MEJORADA PARA MÓVILES
+      ============================================ */
+   
+   /* Pantallas muy grandes - mantener 100% */
+   @media screen and (min-width: 1400px) {
+     .brochure-container {
+       max-width: 297mm;
+       transform: scale(1);
+     }
+   }
+   
+   /* Pantallas grandes - reducir ligeramente */
+   @media screen and (max-width: 1399px) and (min-width: 1200px) {
+     .brochure-container {
+       max-width: 100%;
+       transform: scale(0.95);
+       transform-origin: top center;
+     }
+   }
+   
+   /* Pantallas medianas - mantener legible */
+   @media screen and (max-width: 1199px) and (min-width: 900px) {
+     .brochure-container {
+       max-width: 100%;
+       transform: scale(0.85);
+       transform-origin: top center;
+     }
+   }
+   
+   /* Tablets - SIN escalar hacia abajo tanto */
+   @media screen and (max-width: 899px) and (min-width: 768px) {
+     .brochure-container {
+       max-width: 100%;
+       transform: scale(1);
+       transform-origin: top center;
+       /* Ajustar padding para aprovechar espacio */
+     }
+     
+     .brochure-container section {
+       padding-left: 1rem !important;
+       padding-right: 1rem !important;
+     }
+   }
+   
+   /* MÓVILES - MANTENER TAMAÑO GRANDE TIPO POSTER */
+   @media screen and (max-width: 767px) {
+     body {
+       background: white !important;
+     }
+     
+     .brochure-container {
+       max-width: 100% !important;
+       width: 100% !important;
+       transform: none !important; /* NO escalar en móviles */
+       margin: 0 !important;
+       box-shadow: none !important;
+     }
+     
+     /* Ajustar padding para móviles */
+     .brochure-container header,
+     .brochure-container section,
+     .brochure-container footer {
+       padding-left: 1rem !important;
+       padding-right: 1rem !important;
+     }
+     
+     /* Ajustar grids para móviles */
+     .brochure-container .grid {
+       grid-template-columns: 1fr !important;
+     }
+     
+     /* Textos más grandes en móviles */
+     .brochure-container h1 {
+       font-size: 1.75rem !important;
+     }
+     
+     .brochure-container h2 {
+       font-size: 1.5rem !important;
+     }
+     
+     .brochure-container h3 {
+       font-size: 1.25rem !important;
+     }
+     
+     /* Iconos más pequeños en móviles */
+     .brochure-container svg {
+       width: 2rem !important;
+       height: 2rem !important;
+     }
+     
+     /* Ajustar espaciado en móviles */
+     .brochure-container .space-y-6 > * + * {
+       margin-top: 1rem !important;
+     }
+     
+     .brochure-container .gap-6 {
+       gap: 1rem !important;
+     }
+     
+     /* Ocultar patrones de fondo en móviles para mejor rendimiento */
+     .brochure-container .absolute.inset-0 {
+       display: none !important;
+     }
+   }
+   
+   /* Móviles muy pequeños */
+   @media screen and (max-width: 480px) {
+     .brochure-container {
+       font-size: 14px;
+     }
+     
+     .brochure-container h1 {
+       font-size: 1.5rem !important;
+     }
+     
+     .brochure-container h2 {
+       font-size: 1.25rem !important;
+     }
+   }
+   
+   /* ============================================
       OPTIMIZACIÓN PARA EXPORTACIÓN PDF
       ============================================ */
    
-   /* Asegurar alineación de bullets en PDF */
    .flex.items-baseline {
      align-items: baseline !important;
    }
    
-   /* Prevenir que los bullets se rompan en PDF */
    .flex.items-baseline > span:first-child {
      display: inline-block;
      min-width: 1.5rem;
      flex-shrink: 0;
    }
    
-   /* Asegurar que los elementos con position absolute se rendericen en PDF */
    [style*="position: absolute"] {
      position: absolute !important;
    }
    
-   /* Forzar z-index en PDF */
    [style*="zIndex: 20"] {
      z-index: 20 !important;
    }
@@ -73,7 +188,10 @@
      z-index: 10 !important;
    }
    
-   /* Configuración general para impresión y PDF */
+   /* ============================================
+      CONFIGURACIÓN PARA IMPRESIÓN Y PDF
+      ============================================ */
+   
    @media print {
      @page {
        size: A3 portrait;
@@ -91,7 +209,6 @@
        background: white !important;
      }
    
-     /* Contenedor principal del brochure */
      .brochure-container {
        box-shadow: none !important;
        max-width: 297mm !important;
@@ -100,6 +217,7 @@
        page-break-after: avoid;
        page-break-inside: avoid;
        margin: 0 !important;
+       transform: none !important;
      }
    
      /* Ocultar elementos que no deben aparecer en PDF */
@@ -126,20 +244,19 @@
        print-color-adjust: exact !important;
      }
    
-     /* Asegurar que los enlaces sean visibles y funcionales */
+     /* CRÍTICO: Asegurar que los enlaces sean visibles y funcionales */
      a[href] {
        color: var(--jega-gold) !important;
        text-decoration: underline !important;
+       pointer-events: auto !important;
      }
    
-     /* Optimizar imágenes */
      img {
        max-width: 100%;
        height: auto;
        page-break-inside: avoid;
      }
    
-     /* Mantener opacidades de patrones de fondo */
      .opacity-5 {
        opacity: 0.05 !important;
      }
@@ -148,7 +265,6 @@
        opacity: 0.10 !important;
      }
    
-     /* Preservar colores de texto */
      .text-white {
        color: #ffffff !important;
      }
@@ -160,13 +276,22 @@
      .text-gray-400 {
        color: #9ca3af !important;
      }
+     
+     /* Preservar fondos de las ModuleCards */
+     .bg-gradient-to-br {
+       -webkit-print-color-adjust: exact !important;
+       print-color-adjust: exact !important;
+     }
+     
+     .border-gray-300 {
+       border-color: #d1d5db !important;
+     }
    }
    
    /* ============================================
-      MEJORAS PARA html2canvas
+      MEJORAS PARA html2canvas Y jsPDF
       ============================================ */
    
-   /* Asegurar que los fondos con patrón se rendericen correctamente */
    .absolute.inset-0 {
      position: absolute;
      top: 0;
@@ -175,7 +300,18 @@
      bottom: 0;
    }
    
-   /* Mejorar renderizado de sombras en pantalla */
+   /* Asegurar que las ModuleCards tengan fondo visible en PDF */
+   .bg-gradient-to-br.from-gray-50.to-gray-100 {
+     background-color: #f8f9fa !important;
+     -webkit-print-color-adjust: exact !important;
+     print-color-adjust: exact !important;
+   }
+   
+   /* Espacio adicional debajo de las líneas decorativas doradas */
+   .w-24.h-1.bg-gradient-to-r {
+     margin-bottom: 1.5rem !important;
+   }
+   
    @media screen {
      .shadow-2xl {
        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
@@ -190,143 +326,15 @@
      }
    }
    
-   /* Asegurar que los z-index funcionen correctamente */
    .relative.z-10 {
      position: relative;
      z-index: 10;
-   }
-   
-   /* Asegurar que los colores personalizados se preserven */
-   .text-white {
-     color: #ffffff;
-   }
-   
-   .text-gray-200 {
-     color: #e5e7eb;
-   }
-   
-   .text-gray-400 {
-     color: #9ca3af;
-   }
-   
-   /* Mejorar renderizado de gradientes */
-   .bg-gradient-to-r {
-     background-image: linear-gradient(to right, var(--tw-gradient-stops));
-   }
-   
-   .bg-gradient-to-br {
-     background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
-   }
-   
-   /* ============================================
-      MODO COMPACTO PARA AJUSTE A A3
-      ============================================ */
-   
-   /* Reducir espaciado cuando se activa modo compacto */
-   .brochure-container.compact-mode section {
-     padding-top: 0.75rem !important;
-     padding-bottom: 0.75rem !important;
-   }
-   
-   .brochure-container.compact-mode header,
-   .brochure-container.compact-mode footer {
-     padding-top: 0.5rem !important;
-     padding-bottom: 0.5rem !important;
-   }
-   
-   .brochure-container.compact-mode h1 {
-     font-size: 1.75rem !important;
-     margin-bottom: 0.5rem !important;
-   }
-   
-   .brochure-container.compact-mode h2 {
-     font-size: 1.5rem !important;
-     margin-bottom: 0.5rem !important;
-   }
-   
-   .brochure-container.compact-mode p {
-     margin-bottom: 0.75rem !important;
-   }
-   
-   .brochure-container.compact-mode .grid {
-     gap: 1rem !important;
-   }
-   
-   /* ============================================
-      FIT-TO-PAGE: AJUSTE ESTRICTO A UNA PÁGINA
-      ============================================ */
-   
-   .brochure-container.fit-to-page {
-     max-height: 420mm;
-     overflow: hidden;
-     display: flex;
-     flex-direction: column;
-   }
-   
-   .brochure-container.fit-to-page > * {
-     flex-shrink: 1;
-   }
-   
-   /* ============================================
-      OPTIMIZACIÓN RESPONSIVE
-      ============================================ */
-   
-   @media screen and (max-width: 1400px) {
-     .brochure-container {
-       max-width: 100%;
-       transform: scale(0.9);
-       transform-origin: top center;
-     }
-   }
-   
-   @media screen and (max-width: 1200px) {
-     .brochure-container {
-       transform: scale(0.8);
-     }
-   }
-   
-   @media screen and (max-width: 900px) {
-     .brochure-container {
-       transform: scale(0.7);
-     }
-   }
-   
-   @media screen and (max-width: 768px) {
-     .brochure-container {
-       transform: scale(1);
-       max-width: 100%;
-     }
-   }
-   
-   /* ============================================
-      ESTILOS AUXILIARES PARA EXPORTACIÓN
-      ============================================ */
-   
-   /* Asegurar visibilidad de enlaces en todos los modos */
-   a[href]:hover {
-     text-decoration: underline;
-     opacity: 0.9;
-   }
-   
-   /* Los gradientes de Tailwind se manejan automáticamente */
-   
-   /* Asegurar que los iconos se vean bien */
-   svg {
-     flex-shrink: 0;
-   }
-   
-   /* Mejorar renderizado de imágenes */
-   img {
-     max-width: 100%;
-     height: auto;
-     display: block;
    }
    
    /* ============================================
       ANIMACIONES Y TRANSICIONES
       ============================================ */
    
-   /* Mantener animaciones suaves en pantalla, pero deshabilitarlas en print */
    @media screen {
      .transition-all {
        transition-property: all;
@@ -354,7 +362,6 @@
    }
    
    @media print {
-     /* Desactivar todas las transiciones en print */
      * {
        transition: none !important;
        animation: none !important;
@@ -362,10 +369,9 @@
    }
    
    /* ============================================
-      ESTILOS PARA BOTONES (SOLO OCULTAR AL IMPRIMIR)
+      BOTÓN DE EXPORTACIÓN PDF - FIXED EN MÓVILES
       ============================================ */
    
-   /* Asegurar que los botones sean visibles en pantalla */
    @media screen {
      .fixed {
        position: fixed !important;
@@ -374,9 +380,26 @@
      button {
        display: inline-flex !important;
      }
+     
+     /* Ajustar botón en móviles */
+     @media screen and (max-width: 767px) {
+       .fixed.bottom-8.right-8 {
+         bottom: 1rem !important;
+         right: 1rem !important;
+       }
+       
+       .fixed button {
+         padding: 0.5rem 1rem !important;
+         font-size: 0.875rem !important;
+       }
+       
+       .fixed svg {
+         width: 1rem !important;
+         height: 1rem !important;
+       }
+     }
    }
    
-   /* Ocultar solo al imprimir */
    @media print {
      button,
      .fixed,
@@ -389,19 +412,16 @@
       UTILIDADES PERSONALIZADAS
       ============================================ */
    
-   /* Clase helper para forzar impresión de colores */
    .print-exact {
      -webkit-print-color-adjust: exact !important;
      print-color-adjust: exact !important;
    }
    
-   /* Clase helper para evitar saltos de página */
    .avoid-break {
      page-break-inside: avoid;
      break-inside: avoid;
    }
    
-   /* Clase helper para forzar salto de página */
    .force-break {
      page-break-before: always;
      break-before: page;
@@ -411,13 +431,11 @@
       ACCESIBILIDAD
       ============================================ */
    
-   /* Asegurar que el contenido sea accesible */
    :focus-visible {
      outline: 2px solid var(--jega-gold);
      outline-offset: 2px;
    }
    
-   /* Mejorar contraste para lectores de pantalla */
    .sr-only {
      position: absolute;
      width: 1px;
@@ -428,6 +446,36 @@
      clip: rect(0, 0, 0, 0);
      white-space: nowrap;
      border-width: 0;
+   }
+   
+   /* ============================================
+      ESTILOS PARA VISTA PREVIA EN MÓVILES
+      ============================================ */
+   
+   @media screen and (max-width: 767px) {
+     /* Hacer que el contenido sea scrolleable verticalmente */
+     html, body {
+       overflow-x: hidden;
+       overflow-y: auto;
+     }
+     
+     /* Asegurar que las imágenes no se desborden */
+     img {
+       max-width: 100%;
+       height: auto;
+     }
+     
+     /* Mejorar legibilidad en móviles */
+     .brochure-container p,
+     .brochure-container li {
+       line-height: 1.6;
+     }
+     
+     /* Ajustar tamaño de botones en móviles */
+     .brochure-container button,
+     .brochure-container a.inline-flex {
+       min-height: 44px; /* Tamaño mínimo táctil recomendado */
+     }
    }
    
    /* ============================================

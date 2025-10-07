@@ -41,14 +41,24 @@ export default function App() {
             {/* Datos de contacto centrados */}
             <div className="flex justify-center">
               <div className="flex flex-wrap justify-center gap-6 text-white">
-                <div className="flex items-center gap-2 text-sm">
+                <a 
+                  href="mailto:JaimeGallo@jegasolutions.co" 
+                  className="flex items-center gap-2 text-sm hover:text-[var(--jega-gold)] transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Mail className="w-4 h-4 text-[var(--jega-gold)]" />
                   <span>JaimeGallo@jegasolutions.co</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
+                </a>
+                <a 
+                  href="https://wa.me/573136093516" 
+                  className="flex items-center gap-2 text-sm hover:text-[var(--jega-gold)] transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <MessageCircle className="w-4 h-4 text-[var(--jega-gold)]" />
                   <span>+57 313 609 3516</span>
-                </div>
+                </a>
                 <div className="flex items-center gap-2 text-sm">
                   <MapPin className="w-4 h-4 text-[var(--jega-gold)]" />
                   <span>Medellín, Colombia</span>
@@ -240,4 +250,3 @@ export default function App() {
     </div>
   );
 }
-
