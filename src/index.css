@@ -1,0 +1,435 @@
+/* ============================================
+   DIRECTIVAS DE TAILWIND CSS
+   Las advertencias de @tailwind son normales
+   si tu editor no tiene el plugin de Tailwind
+   ============================================ */
+   @tailwind base;
+   @tailwind components;
+   @tailwind utilities;
+   
+   :root {
+     --jega-blue-dark: #0f2a4a;
+     --jega-blue-medium: #1a3d6b;
+     --jega-blue-light: #2c5aa0;
+     --jega-gray-light: #f8f9fa;
+     --jega-gold: #d4af37;
+     --jega-gold-light: #f4d03f;
+   }
+   
+   * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+   }
+   
+   body {
+     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+       sans-serif;
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+   }
+   
+   /* ============================================
+      ESTILOS DEL BROCHURE
+      ============================================ */
+   
+   .brochure-container {
+     max-width: 297mm; /* A3 width */
+     margin: 0 auto;
+     background: white;
+     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+     position: relative;
+     overflow: visible;
+   }
+   
+   /* ============================================
+      OPTIMIZACIÓN PARA EXPORTACIÓN PDF
+      ============================================ */
+   
+   /* Asegurar alineación de bullets en PDF */
+   .flex.items-baseline {
+     align-items: baseline !important;
+   }
+   
+   /* Prevenir que los bullets se rompan en PDF */
+   .flex.items-baseline > span:first-child {
+     display: inline-block;
+     min-width: 1.5rem;
+     flex-shrink: 0;
+   }
+   
+   /* Asegurar que los elementos con position absolute se rendericen en PDF */
+   [style*="position: absolute"] {
+     position: absolute !important;
+   }
+   
+   /* Forzar z-index en PDF */
+   [style*="zIndex: 20"] {
+     z-index: 20 !important;
+   }
+   
+   [style*="zIndex: 10"] {
+     z-index: 10 !important;
+   }
+   
+   /* Configuración general para impresión y PDF */
+   @media print {
+     @page {
+       size: A3 portrait;
+       margin: 0;
+     }
+   
+     * {
+       -webkit-print-color-adjust: exact !important;
+       print-color-adjust: exact !important;
+     }
+   
+     body {
+       margin: 0;
+       padding: 0;
+       background: white !important;
+     }
+   
+     /* Contenedor principal del brochure */
+     .brochure-container {
+       box-shadow: none !important;
+       max-width: 297mm !important;
+       width: 297mm !important;
+       min-height: 420mm !important;
+       page-break-after: avoid;
+       page-break-inside: avoid;
+       margin: 0 !important;
+     }
+   
+     /* Ocultar elementos que no deben aparecer en PDF */
+     .fixed,
+     button:not(.print-visible),
+     [class*="pdf-export"],
+     [id*="pdf-export"] {
+       display: none !important;
+     }
+   
+     /* Asegurar que las secciones no se rompan */
+     section,
+     header,
+     footer {
+       page-break-inside: avoid;
+       page-break-after: avoid;
+     }
+   
+     /* Preservar colores de fondo en gradientes */
+     .bg-gradient-to-r,
+     .bg-gradient-to-br,
+     [class*="bg-gradient"] {
+       -webkit-print-color-adjust: exact !important;
+       print-color-adjust: exact !important;
+     }
+   
+     /* Asegurar que los enlaces sean visibles y funcionales */
+     a[href] {
+       color: var(--jega-gold) !important;
+       text-decoration: underline !important;
+     }
+   
+     /* Optimizar imágenes */
+     img {
+       max-width: 100%;
+       height: auto;
+       page-break-inside: avoid;
+     }
+   
+     /* Mantener opacidades de patrones de fondo */
+     .opacity-5 {
+       opacity: 0.05 !important;
+     }
+   
+     .opacity-10 {
+       opacity: 0.10 !important;
+     }
+   
+     /* Preservar colores de texto */
+     .text-white {
+       color: #ffffff !important;
+     }
+   
+     .text-gray-200 {
+       color: #e5e7eb !important;
+     }
+   
+     .text-gray-400 {
+       color: #9ca3af !important;
+     }
+   }
+   
+   /* ============================================
+      MEJORAS PARA html2canvas
+      ============================================ */
+   
+   /* Asegurar que los fondos con patrón se rendericen correctamente */
+   .absolute.inset-0 {
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+   }
+   
+   /* Mejorar renderizado de sombras en pantalla */
+   @media screen {
+     .shadow-2xl {
+       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+     }
+   
+     .shadow-xl {
+       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+     }
+   
+     .shadow-lg {
+       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+     }
+   }
+   
+   /* Asegurar que los z-index funcionen correctamente */
+   .relative.z-10 {
+     position: relative;
+     z-index: 10;
+   }
+   
+   /* Asegurar que los colores personalizados se preserven */
+   .text-white {
+     color: #ffffff;
+   }
+   
+   .text-gray-200 {
+     color: #e5e7eb;
+   }
+   
+   .text-gray-400 {
+     color: #9ca3af;
+   }
+   
+   /* Mejorar renderizado de gradientes */
+   .bg-gradient-to-r {
+     background-image: linear-gradient(to right, var(--tw-gradient-stops));
+   }
+   
+   .bg-gradient-to-br {
+     background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+   }
+   
+   /* ============================================
+      MODO COMPACTO PARA AJUSTE A A3
+      ============================================ */
+   
+   /* Reducir espaciado cuando se activa modo compacto */
+   .brochure-container.compact-mode section {
+     padding-top: 0.75rem !important;
+     padding-bottom: 0.75rem !important;
+   }
+   
+   .brochure-container.compact-mode header,
+   .brochure-container.compact-mode footer {
+     padding-top: 0.5rem !important;
+     padding-bottom: 0.5rem !important;
+   }
+   
+   .brochure-container.compact-mode h1 {
+     font-size: 1.75rem !important;
+     margin-bottom: 0.5rem !important;
+   }
+   
+   .brochure-container.compact-mode h2 {
+     font-size: 1.5rem !important;
+     margin-bottom: 0.5rem !important;
+   }
+   
+   .brochure-container.compact-mode p {
+     margin-bottom: 0.75rem !important;
+   }
+   
+   .brochure-container.compact-mode .grid {
+     gap: 1rem !important;
+   }
+   
+   /* ============================================
+      FIT-TO-PAGE: AJUSTE ESTRICTO A UNA PÁGINA
+      ============================================ */
+   
+   .brochure-container.fit-to-page {
+     max-height: 420mm;
+     overflow: hidden;
+     display: flex;
+     flex-direction: column;
+   }
+   
+   .brochure-container.fit-to-page > * {
+     flex-shrink: 1;
+   }
+   
+   /* ============================================
+      OPTIMIZACIÓN RESPONSIVE
+      ============================================ */
+   
+   @media screen and (max-width: 1400px) {
+     .brochure-container {
+       max-width: 100%;
+       transform: scale(0.9);
+       transform-origin: top center;
+     }
+   }
+   
+   @media screen and (max-width: 1200px) {
+     .brochure-container {
+       transform: scale(0.8);
+     }
+   }
+   
+   @media screen and (max-width: 900px) {
+     .brochure-container {
+       transform: scale(0.7);
+     }
+   }
+   
+   @media screen and (max-width: 768px) {
+     .brochure-container {
+       transform: scale(1);
+       max-width: 100%;
+     }
+   }
+   
+   /* ============================================
+      ESTILOS AUXILIARES PARA EXPORTACIÓN
+      ============================================ */
+   
+   /* Asegurar visibilidad de enlaces en todos los modos */
+   a[href]:hover {
+     text-decoration: underline;
+     opacity: 0.9;
+   }
+   
+   /* Los gradientes de Tailwind se manejan automáticamente */
+   
+   /* Asegurar que los iconos se vean bien */
+   svg {
+     flex-shrink: 0;
+   }
+   
+   /* Mejorar renderizado de imágenes */
+   img {
+     max-width: 100%;
+     height: auto;
+     display: block;
+   }
+   
+   /* ============================================
+      ANIMACIONES Y TRANSICIONES
+      ============================================ */
+   
+   /* Mantener animaciones suaves en pantalla, pero deshabilitarlas en print */
+   @media screen {
+     .transition-all {
+       transition-property: all;
+       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+       transition-duration: 300ms;
+     }
+   
+     .transition-colors {
+       transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+       transition-duration: 200ms;
+     }
+   
+     .transition-opacity {
+       transition-property: opacity;
+       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+       transition-duration: 200ms;
+     }
+   
+     .transition-transform {
+       transition-property: transform;
+       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+       transition-duration: 200ms;
+     }
+   }
+   
+   @media print {
+     /* Desactivar todas las transiciones en print */
+     * {
+       transition: none !important;
+       animation: none !important;
+     }
+   }
+   
+   /* ============================================
+      ESTILOS PARA BOTONES (SOLO OCULTAR AL IMPRIMIR)
+      ============================================ */
+   
+   /* Asegurar que los botones sean visibles en pantalla */
+   @media screen {
+     .fixed {
+       position: fixed !important;
+     }
+     
+     button {
+       display: inline-flex !important;
+     }
+   }
+   
+   /* Ocultar solo al imprimir */
+   @media print {
+     button,
+     .fixed,
+     [role="button"] {
+       display: none !important;
+     }
+   }
+   
+   /* ============================================
+      UTILIDADES PERSONALIZADAS
+      ============================================ */
+   
+   /* Clase helper para forzar impresión de colores */
+   .print-exact {
+     -webkit-print-color-adjust: exact !important;
+     print-color-adjust: exact !important;
+   }
+   
+   /* Clase helper para evitar saltos de página */
+   .avoid-break {
+     page-break-inside: avoid;
+     break-inside: avoid;
+   }
+   
+   /* Clase helper para forzar salto de página */
+   .force-break {
+     page-break-before: always;
+     break-before: page;
+   }
+   
+   /* ============================================
+      ACCESIBILIDAD
+      ============================================ */
+   
+   /* Asegurar que el contenido sea accesible */
+   :focus-visible {
+     outline: 2px solid var(--jega-gold);
+     outline-offset: 2px;
+   }
+   
+   /* Mejorar contraste para lectores de pantalla */
+   .sr-only {
+     position: absolute;
+     width: 1px;
+     height: 1px;
+     padding: 0;
+     margin: -1px;
+     overflow: hidden;
+     clip: rect(0, 0, 0, 0);
+     white-space: nowrap;
+     border-width: 0;
+   }
+   
+   /* ============================================
+      FIN DE ESTILOS
+      ============================================ */
